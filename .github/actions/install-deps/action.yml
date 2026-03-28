@@ -3,6 +3,14 @@ description: 'Clones python-greetings and installs pip dependencies'
 runs:
   using: "composite"
   steps:
+    - name: Stop any running greetings services
+      shell: cmd
+      run: |
+        cmd /c "pm2 delete greetings-app-dev & exit 0"
+        cmd /c "pm2 delete greetings-app-stg & exit 0"
+        cmd /c "pm2 delete greetings-app-preprod & exit 0"
+        cmd /c "pm2 delete greetings-app-prod & exit 0"
+
     - name: Checkout pipeline repository
       uses: actions/checkout@v4
 
