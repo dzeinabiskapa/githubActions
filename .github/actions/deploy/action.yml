@@ -19,25 +19,19 @@ runs:
         repository: mtararujs/python-greetings
         path: python-greetings
 
-    - name: Stop existing service if running
-      shell: cmd
-      run: cmd /c "pm2 delete greetings-app-${{ inputs.environment }} & exit 0"
-
-    - name: Copy app to stable location
-      shell: cmd
-      run: |
-        if exist C:\app\greetings-app-${{ inputs.environment }} rmdir /s /q C:\app\greetings-app-${{ inputs.environment }}
-        mkdir C:\app\greetings-app-${{ inputs.environment }}
-        xcopy /E /I /Y python-greetings C:\app\greetings-app-${{ inputs.environment }}
-
     - name: Create virtual environment and install dependencies
       shell: cmd
-      working-directory: C:\app\greetings-app-${{ inputs.environment }}
+      working-directory: python-greetings
       run: |
         python -m venv venv
         venv\Scripts\python -m pip install -r requirements.txt
 
+    - name: Stop existing service if running
+      shell: cmd
+      working-directory: python-greetings
+      run: cmd /c "pm2 delete greetings-app-${{ inputs.environment }} & exit 0"
+
     - name: Start service with pm2
       shell: cmd
-      working-directory: C:\app\greetings-app-${{ inputs.environment }}
-      run: pm2 start app.py --name greetings-app-${{ inputs.environment }} --interpreter C:\app\greetings-app-${{ inputs.environment }}\venv\Scripts\python.exe -- --port ${{ inputs.port }}
+      working-directory: python-greetings
+      run: pm2 start app.py --name greetings-app-${{ inputs.environment }} --interpreter %CD%\venv\Scripts\python.exe -- --port ${{ inputs.port }}
