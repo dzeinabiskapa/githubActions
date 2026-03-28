@@ -29,9 +29,9 @@ runs:
     - name: Stop existing service if running
       shell: cmd
       working-directory: python-greetings
-      run: pm2 delete greetings-app-${{ inputs.environment }} & set "errorlevel=0"
+      run: cmd /c "pm2 delete greetings-app-${{ inputs.environment }} & exit 0"
 
     - name: Start service with pm2
       shell: cmd
       working-directory: python-greetings
-      run: pm2 start app.py --name greetings-app-${{ inputs.environment }} --interpreter venv\Scripts\python.exe -- --port ${{ inputs.port }}
+      run: pm2 start app.py --name greetings-app-${{ inputs.environment }} --interpreter %CD%\venv\Scripts\python.exe -- --port ${{ inputs.port }}
