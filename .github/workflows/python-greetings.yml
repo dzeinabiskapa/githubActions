@@ -10,6 +10,8 @@ jobs:
   install-pip-deps:
     runs-on: self-hosted
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
       - name: Info
         run: echo "Installing all required pip dependencies..."
       - name: Install dependencies
@@ -19,6 +21,8 @@ jobs:
     runs-on: self-hosted
     needs: install-pip-deps
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
       - name: Info
         run: echo "Deploying application to DEV environment on port 7001..."
       - name: Deploy to dev
@@ -31,6 +35,8 @@ jobs:
     runs-on: self-hosted
     needs: deploy-to-dev
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
       - name: Info
         run: echo "Running tests on DEV environment..."
       - name: Test on dev
@@ -42,6 +48,8 @@ jobs:
     runs-on: self-hosted
     needs: tests-on-dev
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
       - name: Info
         run: echo "Deploying application to STG environment on port 7002..."
       - name: Deploy to stg
@@ -54,6 +62,8 @@ jobs:
     runs-on: self-hosted
     needs: deploy-to-stg
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
       - name: Info
         run: echo "Running tests on STG environment..."
       - name: Test on stg
@@ -65,6 +75,8 @@ jobs:
     runs-on: self-hosted
     needs: tests-on-stg
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
       - name: Info
         run: echo "Deploying application to PREPROD environment on port 7003..."
       - name: Deploy to preprod
@@ -77,6 +89,8 @@ jobs:
     runs-on: self-hosted
     needs: deploy-to-preprod
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
       - name: Info
         run: echo "Running tests on PREPROD environment..."
       - name: Test on preprod
@@ -88,6 +102,8 @@ jobs:
     runs-on: self-hosted
     needs: tests-on-preprod
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
       - name: Info
         run: echo "Deploying application to PROD environment on port 7004..."
       - name: Deploy to prod
@@ -100,6 +116,8 @@ jobs:
     runs-on: self-hosted
     needs: deploy-to-prod
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
       - name: Info
         run: echo "Running tests on PROD environment..."
       - name: Test on prod
