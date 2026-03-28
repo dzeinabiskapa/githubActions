@@ -29,7 +29,7 @@ runs:
     - name: Stop existing service if running
       shell: cmd
       working-directory: python-greetings
-      run: pm2 delete greetings-app-${{ inputs.environment }} || echo "Service not found, continuing..."
+      run: pm2 delete greetings-app-${{ inputs.environment }} & set "errorlevel=0"
 
     - name: Start service with pm2
       shell: cmd
